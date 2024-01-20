@@ -3,54 +3,55 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 
-\title{Problem Statement and Goals\\\progname}
+\title{3D Visualization and Tracking of Brain fMRI Scans\\\progname}
 
-\author{\authname}
+\author{Nada Elmasry\authname}
 
-\date{}
-
-\input{../Comments}
-\input{../Common}
+\date{19 Jan 2024}
 
 \begin{document}
 
 \maketitle
 
-\begin{table}[hp]
-\caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
-\toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
-\midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
-... & ... & ...\\
-\bottomrule
-\end{tabularx}
-\end{table}
-
 \section{Problem Statement}
-
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required information.}
-
+ 
 \subsection{Problem}
+The project aims to implement a user-friendly platform for visualizing 3D fMRI scans.
+The program's primary goal is to enable users to visualize brain fMRI scans and track
+the activity of a selected brain region throughout an fMRI scan, facilitating a better
+understanding of how specific brain regions' activities change over time and in relation to other brain areas.
 
 \subsection{Inputs and Outputs}
+The application will take NIFTI or DICOM format files of a patient scan as input.
+Subsequently, it will generate a 3D reconstruction of the input along with associated
+2D slices in the sagittal, axial, and coronal planes. In addition to viewing the 3D Volume,
+users can select a 2D slice and choose the axis for viewing. For tracking a specific region's
+activity, users can select the region through an application option, allowing the program to mark the region 
+and track its activity over time.
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
+
 
 \subsection{Stakeholders}
+Stakeholders include but are not limited to researchers, professors, doctors, 
+radiologists, medical professionals, and students studying the brain and associated 
+diseases and conditions.
+
 
 \subsection{Environment}
-
-\wss{Hardware and software}
+The project will be developed as a cloud-deployed web application, providing users
+with a self-contained, cross-platform solution.
 
 \section{Goals}
+\begin{enumerate}
+\item 3D reconstruction of fMRI scans.
+\item Implement 2D slice views (sagittal, axial, coronal) for fMRI scans.
+\item Segment and track the activity of a selected brain region.
+\item Develop a user-friendly web application.
+\end{enumerate}
 
 \section{Stretch Goals}
+Implementation of multi-thread processing or GPU processing to enhance computational 
+speed and reduce loading times when initially loading a scan, contributing to an optimized user experience.
+
 
 \end{document}
