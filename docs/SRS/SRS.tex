@@ -77,6 +77,9 @@
 \newcounter{lcnum} %Likely change number
 \newcommand{\lthelcnum}{LC\thelcnum}
 \newcommand{\lcref}[1]{LC\ref{#1}}
+\newcounter{ulcnum} %Unlikely change number
+\newcommand{\ltheulcnum}{ULC\theulcnum}
+\newcommand{\ulcref}[1]{ULC\ref{#1}}
 
 \usepackage{fullpage}
 
@@ -148,7 +151,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
   \toprule {\bf Date} & {\bf Version} & {\bf Notes}         \\
   \midrule
-  Feb 5               & 1.0           & Intial SRS Document \\
+  Feb 6               & 1.0           & Intial SRS Document \\
   \bottomrule
 \end{tabularx}
 
@@ -173,14 +176,10 @@ description of the unit and the SI name.
 %\begin{table}[ht]
 \noindent \begin{tabular}{l l l}
   \toprule
-  \textbf{symbol} & \textbf{unit} & \textbf{SI}                       \\
+  \textbf{symbol}   & \textbf{unit} & \textbf{SI} \\
   \midrule
-  \si{\metre}     & length        & metre                             \\
-  \si{\kilogram}  & mass          & kilogram                          \\
-  \si{\second}    & time          & second                            \\
-  \si{\celsius}   & temperature   & centigrade                        \\
-  \si{\joule}     & energy        & joule                             \\
-  \si{\watt}      & power         & watt (W = \si{\joule\per\second}) \\
+  \si{\milli\metre} & thickness     & millimetre  \\
+
   \bottomrule
 \end{tabular}
 %	\caption{Provide a caption}
@@ -199,34 +198,40 @@ systems.  The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
   \textbf{symbol} & \textbf{unit} & \textbf{description}\\
   \midrule
-  $A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
+  $v$ & - & Voxel
   \\
-  $A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over
-  which heat is transferred in
+  $p$ & - & Pixel
   \\
   \bottomrule
 \end{longtable*}
-\plt{Use your problems actual symbols.  The si package is a good idea to use for
-  units.}
+
 
 \subsection{Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
   \toprule
-  \textbf{symbol} & \textbf{description}                                                     \\
+  \textbf{symbol} & \textbf{description}                           \\
   \midrule
-  A               & Assumption                                                               \\
-  DD              & Data Definition                                                          \\
-  GD              & General Definition                                                       \\
-  GS              & Goal Statement                                                           \\
-  IM              & Instance Model                                                           \\
-  LC              & Likely Change                                                            \\
-  PS              & Physical System Description                                              \\
-  R               & Requirement                                                              \\
-  SRS             & Software Requirements Specification                                      \\
-  \progname{}     & \plt{put an expanded version of your program name here (as appropriate)} \\
-  TM              & Theoretical Model                                                        \\
+  A               & Assumption                                     \\
+  DD              & Data Definition                                \\
+  GD              & General Definition                             \\
+  GS              & Goal Statement                                 \\
+  IM              & Instance Model                                 \\
+  LC              & Likely Change                                  \\
+  ULC             & Unlikely Change                                \\
+  PS              & Physical System Description                    \\
+  R               & Requirement                                    \\
+  SRS             & Software Requirements Specification            \\
+  fMRI            & Functional Magnetic Resonance imaging          \\
+  CNN             & Convolutional Neural Network                   \\
+  3D              & Three dimensional                              \\
+  2D              & Two dimensional                                \\
+  LPS             & Left-Posterior-Superior System                 \\
+  RAS             & Right, Anterior, Superior System               \\
+  DICOM           & Digital Imaging and Communications in Medicine \\
+  NIfTI           & Neuroimaging Informatics Technology Initiative \\
+  TM              & Theoretical Model                              \\
   \bottomrule
 \end{tabular}\\
 
@@ -257,11 +262,13 @@ the document the reader should be able to define the project and have a visual i
 of what the project represents.
 \subsection{Scope of Requirements}
 
-Thr scope of requirements of the project covers mainly two parts:
-1. Visualization: the project's software will visualize fMRI scans into 3D volumes,
-and 2D slices representing the anatomical coordinate system used by the fMRI scan.
-2. Segmentation: the project's software can perform anatomical segmentation of 3D volumes into voxels,
-and on 2D slices into pixels.
+The scope of requirements of the project covers mainly two parts:
+\begin{itemize}
+  \item \textbf{Visualization}: the project's software will visualize fMRI scans into 3D volumes,
+        and 2D slices representing the anatomical coordinate system used by the fMRI scan.
+  \item \textbf{Segmentation}: the project's software can perform anatomical segmentation of 3D volumes into voxels,
+        and on 2D slices into pixels.
+\end{itemize}
 
 The user requirements are to be able to input the correct data type into the project's
 software, manipulate the user interface to change visualization settings, and to interpret
@@ -282,9 +289,7 @@ The organization of this document follows the template for an SRS for
 scientific computing software proposed by \cite{Koothoor2013} and
 \cite{SmithAndLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions and
 assumptions. The goal statements are refined to the theoretical models, and
-theoretical models to the instance models. For readers that would like a more bottom-up
-approach, they can start reading the instance models in Section
-\ref{sssec:im} and trace back to find any additional information they require.
+theoretical models to the instance models.
 
 
 \section{General System Description}
@@ -324,9 +329,9 @@ flow between the system and its environment.
         \begin{itemize}
           \item Correctly visualize 3D volumes
           \item Correctly visualize 2D slices according to the anatomical
-                coordinate system explained in \ref{Terminology and  Definitions}.
+                coordinate system explained in section\ref{AnCoordSys}.
           \item Correctly perform segmentation of 3D fMRI volumes into the brain
-                anatomical regions  explained in \ref{Terminology and  Definitions}.
+                anatomical regions  explained in section\ref{AnSeg}.
           \item Provide the user input options to be able to choose wether to visualize
                 the complete 3D volume or a sub-volume, and to be able to visualize 2D slices and
                 segemntation results simultaneously across the time frame of the fMRI scan.
@@ -356,7 +361,7 @@ time frames within the scan.
 
 \subsubsection{Co-ordinate Systems}
 the purpose of this section is to provide the reader with the knowledge of the co-ordinate systems
-required to understand and work with medical images. \ref*{Nejad2017}
+required to understand and work with medical images. \cite{Nejad2017}
 
 \paragraph*{World Coordinate System}
 
@@ -371,7 +376,7 @@ While each model has it's own coordinate system, all models must be transformed 
 
 
 
-\paragraph*{Anatomical Coordinate System}
+\paragraph*{Anatomical Coordinate System} \label{AnCoordSys}
 The Anatomical Coordinate System is a 3D right-handed coordinate system that describes human anatomy through three planes:\cite{SlicerWikiCoordinateSystems} \cite{Nejad2017}
 \begin{itemize}
   \item \textbf{Axial/Transverse plane}: is parallel to the ground and separates the head (Superior) from the feet (Inferior).
@@ -415,7 +420,7 @@ In medical imaging, it's crucial for extracting key data from scans, including o
 Brain imaging relies heavily on segmentation to gain insight into the brain's structure and function.
 There are two primary types: functional segmentation, which focuses on brain activity, and anatomical segmentation, which details the brain's physical structure.
 
-\paragraph*{Anatomical Segmentation}
+\paragraph*{Anatomical Segmentation} \label{AnSeg}
 Anatomical segmentation is a crucial process in neuroimaging that consists of dividing the brain into structurally distinct areas based on MRI scans,
 identifying regions such as gray matter, white matter, and cerebrospinal fluid. This segmentation is essential for a wide range of neuroscience studies,
 enabling researchers to precisely localize brain activity, assess changes in brain structure over time, or study the anatomical differences between populations.
@@ -543,7 +548,7 @@ on.
     \hline
     Sources  & \cite{fedorov2017end}                                                                                                                      \\
     \hline
-    Ref.\ By & \ddref{DD_signalImage}                                                                                                                     \\
+    Ref.\ By & \iref{IM1}, \iref{IM2}                                                                                                                     \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -577,7 +582,7 @@ on.
     \hline
     Sources  & \cite{fedorov2017end}                                                                                    \\
     \hline
-    Ref.\ By & \ddref{DD_signalImage}, \tref{T_contrast}, \aref{A_yield}                                                \\
+    Ref.\ By & \iref{IM1}, \iref{IM2}                                                                                   \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -591,25 +596,26 @@ on.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM3}                                                                          \\
+    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM3}                                                                                               \\
     \hline
-    Label    & \bf Convolution                                                                                                                \\
+    Label    & \bf Convolution                                                                                                                                     \\
     \hline
-    Symbol   & -                                                                                                                              \\
+    Symbol   & -                                                                                                                                                   \\
     \hline
-    Units    & dimensionless                                                                                                                  \\
+    Units    & dimensionless                                                                                                                                       \\
     \hline
-    Equation & -                                                                                                                              \\
+    Equation & -                                                                                                                                                   \\
     \hline
     Description
-             & \\                                                                            \\
+             & A convolution is a method to reduce the image dimensions by extracting relevant information by sliding a kernel (\tref{TM4}) across the image.      \\
+             & A convolution combines information about local pixels such that pixels close to each other in an image are ”summarized” by a smaller set of pixels. \\
     \hline
     Notes
-             & \\
+             & -                                                                                                                                                   \\
     \hline
-    Sources  & \cite{}                                                                                                           \\
+    Sources  & \href{https://courses.cs.washington.edu/courses/cse416/22su/lectures/10/lecture_10.pdf}{Convolutional Neural Networks}                              \\
     \hline
-    Ref.\ By & \ddref{}, \tref{}, \aref{}                                                                      \\
+    Ref.\ By & \tref{TM4}                                                                                                                                          \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -622,25 +628,25 @@ on.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM4}                                                                          \\
+    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM4}                                                                  \\
     \hline
-    Label    & \bf Kernel                                                                                                                     \\
+    Label    & \bf Kernel                                                                                                             \\
     \hline
-    Symbol   & -                                                                                                                              \\
+    Symbol   & -                                                                                                                      \\
     \hline
-    Units    & dimensionless                                                                                                                  \\
+    Units    & dimensionless                                                                                                          \\
     \hline
-    Equation & -                                                                                                                              \\
+    Equation & -                                                                                                                      \\
     \hline
     Description
-             & \\                                                                              \\
+             & A kernel is an $nxn$ matrix that performs the convolution operation(\tref{TM3}) on a $mxm$ image matrix, where $n<m$.  \\
     \hline
     Notes
-             &                               \\
+             & -                                                                                                                      \\
     \hline
-    Sources  & \cite{}                                                                                                           \\
+    Sources  & \href{https://courses.cs.washington.edu/courses/cse416/22su/lectures/10/lecture_10.pdf}{Convolutional Neural Networks} \\
     \hline
-    Ref.\ By & \ddref{}, \tref{}, \aref{}                                                                      \\
+    Ref.\ By & \tref{TM5}, \tref{TM3}                                                                                                 \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -653,28 +659,45 @@ on.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM5}                                                                          \\
+    Number   & TM\refstepcounter{theorynum}\thetheorynum \label{TM5}                                                                     \\
     \hline
-    Label    & \bf Convolutional layer                                                                                                        \\
+    Label    & \bf Convolutional layer                                                                                                   \\
     \hline
-    Symbol   & -                                                                                                                              \\
+    Symbol   & -                                                                                                                         \\
     \hline
-    Units    & dimensionless                                                                                                                  \\
+    Units    & dimensionless                                                                                                             \\
     \hline
-    Equation & -                                                                                                                              \\
+    Equation & $W_out = \frac{W-F+2P}{S}+1$                                                                                              \\
     \hline
     Description
-             &                                                                               \\
+             & A Convolutional layer performs a dot product between two matrices,
+    where one matrix is the set of learnable parameters otherwise known as a kernel \tref{TM4},
+    and the other matrix is the restricted portion of the receptive field. The Kernel is smaller in size than the receptive field but extends
+    to the depth of the image \ddref{DD3}. If the image is an RGB image, the kernel will be applied to all three color channels.         \\
+             & $W_out$ is the width and height of the output volume.                                                                     \\
+             & $W$ is the width and height of the input volume.                                                                          \\
+             & $F$ is the size of the kernel $FxF$.                                                                                      \\
+             & $P$ is the padding around the kernel.                                                                                     \\
+             & $S$ is the stride or jump of the kernel after each operation.                                                             \\
+
     \hline
     Notes
-             &                             \\
+             & -                                                                                                                         \\
     \hline
-    Sources  & \cite{}                                                                                                           \\
+    Sources  & \href{https://towardsdatascience.com/convolutional-neural-networks-explained-9cc5188c4939}{Convolutional Neural Networks} \\
     \hline
-    Ref.\ By & \ddref{}, \tref{}, \aref{}                                                                      \\
+    Ref.\ By & \iref{IM1}, \iref{IM2}                                                                                                    \\
     \hline
   \end{tabular}
 \end{minipage}\\
+
+\begin{figure}[hbpt!]
+  \centering
+  \includegraphics[width=70mm]{conv-layer.png}
+  \caption{visualization of the inner workings of convolutional layers. The figure shows a kernel performing a convolution operation on
+    a part of an image.~\cite{suedumrong2022application}}
+  \label{conv-layer}
+\end{figure}
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
@@ -694,26 +717,24 @@ models. The dimension of each quantity is also given.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{DD1}                     \\
+    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{DD1}                                                  \\
     \hline
-    Label       & \bf    Pixel                                                                \\
+    Label       & \bf    Pixel                                                                                             \\
     \hline
-    Symbol      & $p:\mathbb{R}$                                                              \\
+    Symbol      & $p:\mathbb{R}$                                                                                           \\
     \hline
     % Units& $Mt^{-3}$\\
     % \hline
-    SI Units    & -                                                                           \\
+    SI Units    & -                                                                                                        \\
     \hline
-    Equation    & -                                                                           \\
+    Equation    & -                                                                                                        \\
     \hline
     Description & A pixel is the smallest programmable color element on a digital screen.
-    Each pixel comprises a subpixel that emits a red, green and blue (RGB) color, which displays at different intensities.
-    \\
+    Each pixel comprises a subpixel that emits a red, green and blue (RGB) color, which displays at different intensities. \\
     \hline
-    Sources     & \href{https://www.techtarget.com/whatis/definition/pixel}{Pixel Definition}
-    \\                                          \\
+    Sources     & \href{https://www.techtarget.com/whatis/definition/pixel}{Pixel Definition}                              \\
     \hline
-    Ref.\ By    & \ddref{DD3}                                                                 \\
+    Ref.\ By    & \ddref{DD3}, \iref{IM1}, \iref{IM2}                                                                      \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -746,7 +767,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & \href{https://blogs.scientificamerican.com/observations/whats-a-voxel-and-what-can-it-tell-us-a-primer-on-fmri/}{Voxel Definition} \\
     \hline
-    Ref.\ By    & \ddref{DD4}                                                                                                                        \\
+    Ref.\ By    & \ddref{DD4}, \iref{IM1}, \iref{IM2}                                                                                                \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -773,13 +794,13 @@ models. The dimension of each quantity is also given.
     Equation    & -                                                                                       \\
     \hline
     Description & An image is a mapping from the continous spatial domain to the discrete digital domain.
-    An image consists of a number of pixels (DD\ref*{DD1}).
+    An image consists of a number of pixels (\ddref{DD1}).
 
     \\
     \hline
     Sources     & \href{https://ai.stanford.edu/~syyeung/cvweb/tutorial1.html}{Image Definition}          \\
     \hline
-    Ref.\ By    & \ddref{ewat}                                                                             \\
+    Ref.\ By    & \iref{IM1}, \iref{IM2}                                                                  \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -806,14 +827,11 @@ models. The dimension of each quantity is also given.
     \hline
     Equation    & -                                                                                                          \\
     \hline
-    Description & A Volume is a grid based representation of 3D spaces. It consists of
-    an array of voxels DD\ref*{DD3}.
-
-    \\
+    Description & A Volume is a grid based representation of 3D spaces. It consists of an array of voxels \ddref{DD3}.       \\
     \hline
-    Sources     & -                                                                                            \\
+    Sources     & -                                                                                                          \\
     \hline
-    Ref.\ By    & -                                                                                              \\
+    Ref.\ By    & \iref{IM1}, \iref{IM2}                                                                                     \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -834,23 +852,22 @@ models. The dimension of each quantity is also given.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & IM\refstepcounter{instnum}\theinstnum \label{IM1}                                   \\
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{IM1}                                                                                                                           \\
     \hline
-    Label       & \bf Segmentation                                                                    \\
+    Label       & \bf Segmentation                                                                                                                                                            \\
     \hline
-    Input       & 3D volume in 3D segmentation, 2D slice/image in 2D segmentation.                                                        \\
-                     \\
+    Input       & 3D volume in 3D segmentation, 2D slice/image in 2D segmentation.                                                                                                            \\
     \hline
-    Output      & Segmented Volume (Voxels are labeled) in 3D segmentation. Segmented Slice/Image (Pixels are labeled) in 2D segmentation.\\
+    Output      & Segmented Volume (Voxels are labeled) in 3D segmentation \ddref{DD4}, \ddref{DD2}. Segmented Slice/Image (Pixels are labeled) in 2D segmentation \ddref{DD1} , \ddref{DD3}. \\
     \hline
-    Description & Segmentation precisely divides an object into related entities, each representing specific locations or meanings. 
-    In medical imaging there exist two types of segmentation: functional segmentation, which focuses on brain activity, 
+    Description & Segmentation precisely divides an object into related entities, each representing specific locations or meanings.
+    In medical imaging there exist two types of segmentation: functional segmentation, which focuses on brain activity,
     and anatomical segmentation, which details the brain's physical structure.
     \\
     \hline
-    Sources     & -                                                                    \\
+    Sources     & \cite{joshi2022hybrid}, \cite{schmidt2016multivariate}                                                                                                                      \\
     \hline
-    Ref.\ By    & \iref{IM2}                                                                         \\
+    Ref.\ By    & \iref{IM2}                                                                                                                                                                  \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -865,21 +882,21 @@ models. The dimension of each quantity is also given.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & IM\refstepcounter{instnum}\theinstnum \label{IM2}                                   \\
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{IM2}                                                                                                                           \\
     \hline
-    Label       & \bf Anatomical Segmentation                                                         \\
+    Label       & \bf Anatomical Segmentation                                                                                                                                                 \\
     \hline
-    Input       & 3D volume in 3D segmentation, 2D slice/image in 2D segmentation.                                                        \\
+    Input       & 3D volume in 3D segmentation, 2D slice/image in 2D segmentation.                                                                                                            \\
     \hline
-    Output      & Segmented Volume into tissues (Voxels are labeled to belong to a certain tissue) in 3D segmentation. Segmented Slice/Image (Pixels are labeled) in 2D segmentation.\\
+    Output      & Segmented Volume (Voxels are labeled) in 3D segmentation \ddref{DD4}, \ddref{DD2}. Segmented Slice/Image (Pixels are labeled) in 2D segmentation \ddref{DD1} , \ddref{DD3}. \\
     \hline
-    Description & Asubset of segmentation IM\ref*{IM1}. A process that divides the brain into structurally distinct areas based on MRI scans,
+    Description & A subset of segmentation \iref{IM1}. A process that divides the brain into structurally distinct areas based on MRI scans,
     identifying regions such as gray matter, white matter, and cerebrospinal fluid.
     \\
     \hline
-    Sources     & -                                                                    \\
+    Sources     & \cite{joshi2022hybrid}                                                                                                                                                      \\
     \hline
-    Ref.\ By    & -                                                                       \\
+    Ref.\ By    & -                                                                                                                                                                           \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -922,10 +939,10 @@ qualities that the software is expected to exhibit.
         users to navigate through time points and view the segmentation results at each point in time
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R5}:] The system should perform all required data preprocessing
-        to accurately visualize input data \ref*{R2} and perform segmentation \ref*{IM2} \ref*{R4}
+        to accurately visualize input data R\ref*{R2} and perform segmentation \iref{IM2} \rref{R4}
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R6}:] The system should implement an algorithm or
-        set of algorithms capable of performing anatomical segmentation on 3D volumes \ref{IM1} \ref*{IM2}.
+        set of algorithms capable of performing anatomical segmentation on 3D volumes \iref{IM1} \iref{IM2}.
 
 
 \end{itemize}
@@ -968,7 +985,7 @@ and reusability.
 
 \noindent \begin{itemize}
 
-  \item[ULC\refstepcounter{ulcnum}\thelcnum\label{ULC1}:] The project is unlikely to cover
+  \item[ULC\refstepcounter{ulcnum}\theulcnum\label{ULC1}:] The project is unlikely to cover
         functional segmentation.
 
 \end{itemize}
@@ -987,56 +1004,47 @@ general definitions, data definitions, instance models, and likely changes on
 the assumptions.
 
 
-\afterpage{
-  \begin{landscape}
-    \begin{table}[h!]
-      \centering
-      \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-        \hline
-                            & \aref{A1} & \aref{A2} & \aref{A3} & \aref{A4}  \\
-        \hline
-        \tref{TM1}        & X                          &                 &                &             \\ \hline
-        \tref{TM2}        &                            &                 &                &                  \\ \hline
-        \tref{TM3}        &                            &                 &                &                \\ \hline
-        \dref{TM4}           &                            & X               &                &                    \\ \hline
-        \dref{TM5}         &                            &                 & X              & X              \\ \hline
-        \ddref{DD1}    &                            &                 &                &                          \\ \hline
-        \ddref{DD2}     &                            &                 & X              & X                        \\ \hline
-        \ddref{DD3}       &                            &                 &                &                          \\ \hline
-        \ddref{DD4}        &                            &                 &                &                          \\ \hline
-        \iref{IM1}         &                            &                 &                &                          \\ \hline
-        \iref{IM2}         &                            &                 &                &                          \\ \hline
-        \lcref{LC1}     &                            &                 &                & X                        \\ \hline
-        \lcref{LC2}    &                            &                 &                &                          \\ \hline
-        \lcref{ULC1}   &                            &                 &                &                          \\ \hline
-       \hline
-      \end{tabular}
-      \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
-      \label{Table:A_trace}
-    \end{table}
-  \end{landscape}
-}
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|}
     \hline
-                     & \tref{T_COE} & \tref{T_SHE} & \tref{T_LHE} & \dref{NL} & \dref{ROCT} & \ddref{FluxCoil} & \ddref{FluxPCM} & \ddref{D_HOF} & \ddref{D_MF} & \iref{ewat} & \iref{epcm} & \iref{I_HWAT} & \iref{I_HPCM} \\
+                & \aref{A1} & \aref{A2} & \aref{A3} & \aref{A4} \\
     \hline
-    \tref{TM1}     &              &              &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \tref{TM2}     &              &              & X            &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \tref{TM3}     &              &              &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \dref{TM4}        &              &              &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \dref{TM5}      & X            &              &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \ddref{FluxCoil} &              &              &              & X         &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \ddref{FluxPCM}  &              &              &              & X         &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \ddref{D_HOF}    &              &              &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \ddref{D_MF}     &              &              &              &           &             &                  &                 & X             &              &             &             &               &               \\ \hline
-    \iref{ewat}      &              &              &              &           & X           & X                & X               &               &              &             & X           &               &               \\ \hline
-    \iref{epcm}      &              &              &              &           & X           &                  & X               &               & X            & X           &             &               & X             \\ \hline
-    \iref{I_HWAT}    &              & X            &              &           &             &                  &                 &               &              &             &             &               &               \\ \hline
-    \iref{I_HPCM}    &              & X            & X            &           &             &                  & X               & X             & X            &             & X           &               &               \\
+    \tref{TM1}  & X         &           &           &           \\ \hline
+    \tref{TM2}  & X         &           &           &           \\ \hline
+    \tref{TM3}  &           &           &           &           \\ \hline
+    \tref{TM4}  &           &           &           &           \\ \hline
+    \tref{TM5}  &           &           &           &           \\ \hline
+    \ddref{DD1} &           &           &           &           \\ \hline
+    \ddref{DD2} &           &           &           &           \\ \hline
+    \ddref{DD3} &           & X         & X         &           \\ \hline
+    \ddref{DD4} &           & X         & X         &           \\ \hline
+    \iref{IM1}  & X         & X         & X         & X         \\ \hline
+    \iref{IM2}  & X         & X         & X         & X         \\ \hline
+  \end{tabular}
+  \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
+  \label{Table:A_trace}
+\end{table}
+
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
     \hline
+                & \tref{TM1} & \tref{TM2} & \tref{TM3} & \tref{TM4} & \tref{TM5} & \ddref{DD1} & \ddref{DD2} & \ddref{DD3} & \ddref{DD4} & \iref{IM1} & \iref{IM2} \\
+    \hline
+    \tref{TM1}  &            &            &            &            &            &             &             & X           & X           & X          & X          \\ \hline
+    \tref{TM2}  &            &            &            &            &            &             &             & X           & X           & X          & X          \\ \hline
+    \tref{TM3}  &            &            &            & X          & X          &             &             & X           & X           &            &            \\ \hline
+    \tref{TM4}  &            &            & X          &            & X          &             &             & X           & X           &            &            \\ \hline
+    \tref{TM5}  &            &            & X          & X          &            &             &             & X           & X           &            &            \\ \hline
+    \ddref{DD1} &            &            &            &            &            &             & X           & X           &             &            &            \\ \hline
+    \ddref{DD2} &            &            &            &            &            & X           &             &             & X           &            &            \\ \hline
+    \ddref{DD3} &            &            &            &            &            & X           &             &             &             & X          & X          \\ \hline
+    \ddref{DD4} &            &            &            &            &            &             & X           &             &             & X          & X          \\ \hline
+    \iref{IM1}  & X          & X          &            &            &            &             &             & X           & X           &            & X          \\ \hline
+    \iref{IM2}  & X          & X          &            &            &            &             &             & X           & X           & X          &            \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
   \label{Table:trace}
@@ -1044,32 +1052,23 @@ the assumptions.
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{|c|c|c|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
     \hline
-                           & \iref{IM1} & \iref{IM2}  & \rref{R1} & \rref{R2} & \rref{R3} & \rref{R4} & \rref{R5} & \rref{R6} \\
+               & \iref{IM1} & \iref{IM2} & \rref{R1} & \rref{R2} & \rref{R3} & \rref{R4} & \rref{R5} & \rref{R6} \\
     \hline
-    \iref{IM1}            &             & X           &      X         &    X           &                           &              & X         & X         \\ \hline
-    \iref{IM2}            & X           &             &               & X             &                           & X                  &    X     & X           \\ \hline
-    \rref{R1}     &           X  &             &               &               &                           &            X        &              &              \\ \hline
-    \rref{R2}    &           X  &  X           &               &               &                           & X                  &             &               \\ \hline
-    \rref{R3}   &             &             &               &               & X                         &                    &             &               \\ \hline
-    \rref{R4}  &     &            &     X          &               &                           &                  &             &              \\ \hline
-    \rref{R5}     & X           &             &               &               &                           &                    &            &                \\ \hline
-    \rref{R6}       &   X          & X           &               &               &                           &                    &          &                  \\ \hline
+    \iref{IM1} &            & X          & X         &           & X         & X         & X         & X         \\ \hline
+    \iref{IM2} & X          &            & X         &           & X         & X         & X         & X         \\ \hline
+    \rref{R1}  &            &            &           & X         & X         & X         & X         & X         \\ \hline
+    \rref{R2}  & X          & X          & X         &           &           &           & X         & X         \\ \hline
+    \rref{R3}  & X          & X          & X         &           &           & X         & X         & X         \\ \hline
+    \rref{R4}  & X          & X          & X         &           & X         &           & X         & X         \\ \hline
+    \rref{R5}  & X          & X          & X         & X         & X         & X         &           &           \\ \hline
+    \rref{R6}  & X          & X          & X         & X         & X         & X         &           &           \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
   \label{Table:R_trace}
 \end{table}
 
-The purpose of the traceability graphs is also to provide easy references on
-what has to be additionally modified if a certain component is changed.  The
-arrows in the graphs represent dependencies. The component at the tail of an
-arrow is depended on by the component at the head of that arrow. Therefore, if a
-component is changed, the components that it points to should also be
-changed. Figure~\ref{Fig_ATrace} shows the dependencies of theoretical models,
-general definitions, data definitions, instance models, likely changes, and
-assumptions on each other. Figure~\ref{Fig_RTrace} shows the dependencies of
-instance models, requirements, and data constraints on each other.
 
 
 \newpage
