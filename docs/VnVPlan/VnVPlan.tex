@@ -17,10 +17,11 @@
 
 \begin{document}
 
-\title{Project Title: System Verification and Validation Plan for \progname{}} 
-\author{\authname}
+\title{System Verification and Validation Plan for BrainInsight3D: 3D fMRI
+  Visualization \& Segmentation}
+\author{Nada Elmasry}
 \date{\today}
-	
+
 \maketitle
 
 \pagenumbering{roman}
@@ -28,285 +29,455 @@
 \section*{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
-\bottomrule
+  \toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
+  \midrule
+  Date 1              & 1.0           & Notes       \\
+  Date 2              & 1.1           & Notes       \\
+  \bottomrule
 \end{tabularx}
 
 ~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
-
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
-\listoftables
-\wss{Remove this section if it isn't needed}
+% \listoftables
+% \wss{Remove this section if it isn't needed}
 
-\listoffigures
-\wss{Remove this section if it isn't needed}
+% \listoffigures
+% \wss{Remove this section if it isn't needed}
 
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
+\begin{tabular}{l l}
+  \toprule
+  \textbf{symbol} & \textbf{description} \\
+  \midrule
+  T               & Test                 \\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
+See complete list of symbols and abbreviations at \cite{BrainInsightSRS2024}
+% \wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
+%   \citep{SRS} tables, if appropriate}
 
-\wss{Remove this section if it isn't needed}
+% \wss{Remove this section if it isn't needed}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+\section{Introduction}
+This document outlines the System Verification and Validation Plan (VnV) for BrainInsight3D: 3D fMRI
+Visualization \& Segmentation project. The VnV plan outlines the verification and validation tests
+that need to be conducted in order for the software product to be have satisfied its requirements.
+Verification is done by testing individual components and multiple sub-components of the software products together
+to verify that they work correctly. Validation is done to verify that the finished software product meets the user
+needs and requirements.
 
-\section{General Information}
+the document is divided into five main parts, section\ref{section3} presents the general information
+and objectives of the project, section\ref{section4} discusses methods of testing to achieve project's
+objective, section\ref{section5} discusses the system test descriptions including functional and nonfuctional
+requirements tests, and section\ref{section6} discusses the unit testing of the systems components.
+
+
+
+\section{General Information} \label{section3}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+This document provides the software specification requirements(SRS) for the
+BrainInsight 3D project. The project offers 3D and 2D visualization and segmentation
+of fMRI brain scans with time and functional activity tracking in 2D through a
+web application that enables high-resolution visualization and segmentation.
+
+
+
+% \wss{Say what software is being tested.  Give its name and a brief overview of
+%   its general functions.}
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+the objective of this document is to build confidience in the software correctness and
+usability by producing results comparable to current solutions with an easy to use interface
+for better interaction flow and usability. A secondary goal of this project is to make sure the project
+is extensible, this can be achieved by ensuring code quality and maintanibility to enable extensibility by multiple developers.
+Parts of the code will rely on external libraries for operations like image input and preprocessing, and bulding and hosting the
+user interface as a web application. While it would be beneficial to verify the correctness
+of these libraries, this is out of the scope of the project and it will be assumed
+these external libraries will have been verified by their implementation teams.
+% \wss{State what is intended to be accomplished.  The objective will be around
+%   the qualities that are most important for your project.  You might have
+%   something like: ``build confidence in the software correctness,''
+%   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
+%   just those that are most important.}
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+% \wss{You should also list the objectives that are out of scope.  You don't have
+%   the resources to do everything, so what will you be leaving out.  For instance,
+%   if you are not going to verify the quality of usability, state this.  It is also
+%   worthwhile to justify why the objectives are left out.}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+% \wss{The objectives are important because they highlight that you are aware of
+%   limitations in your resources for verification and validation.  You can't do everything,
+%   so what are you going to prioritize?  As an example, if your system depends on an
+%   external library, you can explicitly state that you will assume that external library
+%   has already been verified by its implementation team.}
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.}
 
-\citet{SRS}
+There exists multiple documents which are crucial for in-depth understanding of the software being tested.
+The documents are as follows:
+\begin{itemize}
+  \item Problem Statement \cite{BrainInsightProblemStatement2024}: states the problem the project is trying to solve and introduces the project's features.
+  \item Software Requirements Specification (SRS) Document \cite{BrainInsightSRS2024}: States the assumptions, theoritical and implementation models,
+        functional and nonfunctional requirements, and terminology that will be used throughout the project documentation
+  \item Module Guide (MG) Document \cite{BrainInsightMG2024}: states the functionality and responsibilities of each module in the project.
+  \item Module Interface Specification Document \cite{BrainInsightMIS2024}: States the functional design of each module in the project.
+\end{itemize}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+% \wss{Reference relevant documentation.  This will definitely include your SRS
+%   and your other project documents (design documents, like MG, MIS, etc).  You
+%   can include these even before they are written, since by the time the project
+%   is done, they will be written.}
 
-\section{Plan}
 
-\wss{Introduce this section.   You can provide a roadmap of the sections to
-  come.}
+% \wss{Don't just list the other documents.  You should explain why they are relevant and
+%   how they relate to your VnV efforts.}
 
-\subsection{Verification and Validation Team}
+\section{Plan} \label{section4}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+% \wss{Introduce this section.   You can provide a roadmap of the sections to
+%   come.}
+This section includes the verification detailed plan for the documentation and
+software of the Braininsight3D project. Section \ref{section4.1} introduces the verification and
+validation team responsible for through implementation and validation of all aspects of the project's documentation
+and software components, sections \ref{section4.2}, \ref{section4.3}, \ref{section4.4} discuss the verification
+plan for the project's SRS, design, and VnV plans respectively. Sections \ref{section4.5}, \ref{section4.6}, and
+\ref{section4.7} discuss the software implementation verification plan, automated testing and verification tools, and
+software validation plan respectively. The primary aim of this section is to provide a complete description
+of the plans which will be used to ensure the software abides to its requirements and achieves its objectives.
+\subsection{Verification and Validation Team} \label{section4.1}
 
-\subsection{SRS Verification Plan}
+% \wss{Your teammates.  Maybe your supervisor.
+%   You should do more than list names.  You should say what each person's role is
+%   for the project's verification.  A table is a good way to summarize this information.}
+Table \ref{VnVTeamTable} lists all VnV team members and their roles in the project.
+~\newline
 
-\wss{List any approaches you intend to use for SRS verification.  This may include
-  ad hoc feedback from reviewers, like your classmates, or you may plan for 
-  something more rigorous/systematic.}
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| l | p{0.2\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}
+    \hline
+    % \rowcolor[gray]{0.9} 
+    \textbf{Name}     & \textbf{Document}      & \textbf{Role}              & \textbf{Description}                                                                 \\
+    \hline
+    Dr. Spencer Smith & SRS, VnV Plan, MG, MIS & Instructor/Expert Reviewer & Reviews all project's documentation, design, and functionality                       \\
+    \hline
+    Nada Elmasry      & SRS, Vnv Plan, MG, MIS & Author/Developer           & Author of all project's documents. Main developer and tester of the software product \\
+    \hline
+    Yi-Leng Cheng     & SRS, VnV Plan, MG, MIS & Domain Expert Reviewer     & Review all project's documents.                                                      \\
+    \hline
+    Waqar Awan        & SRS                    & SRS Secondary Reviewer     & Reviews the SRS document.                                                            \\
+    \hline
+    Kim Ying Wong     & VnV Plan               & Secondary Reviewer         & Reviews the VnV Plan document.                                                       \\
+    \hline
+    Morteza Mirzaei   & MG, MIS                & Secondary Reviewer         & Reviews the MG+MIS document.                                                         \\
+    \hline
+  \end{tabular}
+  % \caption{Verification and Validation team}
+  \label{VnVTeamTable}
+\end{minipage}\\
 
-\wss{Maybe create an SRS checklist?}
+\subsection{SRS Verification Plan} \label{section4.2}
 
-\subsection{Design Verification Plan}
+% \wss{List any approaches you intend to use for SRS verification.  This may include
+%   ad hoc feedback from reviewers, like your classmates, or you may plan for
+%   something more rigorous/systematic.}
 
-\wss{Plans for design verification}
+% \wss{Maybe create an SRS checklist?}
 
-\wss{The review will include reviews by your classmates}
+The SRS document will be reviewed by the instructor, the domain expert reviewer, and the secondary reviewer to ensure that the documents fulfills
+the outlined requirements in the SRS checklist \cite{SRSChecklist}. The reviewers will provide their feedback through GitHub issues made by the author for SRS review.
+It is the responsibility of the author to incorporate the reviewers feedback and suggestions, and to address any possible issues in the SRS documentation.
 
-\wss{Create a checklists?}
+\subsection{Design Verification Plan} \label{section4.3}
+The software design will be designed with a focus on usability, accuracy, and performance. The design documentation will include the Module Guide (MG) plan and the Module Interface Specification (MIS) plan.
+The MG and MIS plans will be reviewed by the instructor, the domain expert reviewer, and the secondary reviewer to ensure that the documents fulfills
+the outlined requirements in the MG checklist \cite{BrainInsightMG2024}and MIS checklist \cite{BrainInsightMIS2024}. The reviewers will provide their feedback through GitHub issues made by the author for MG and MIS review.
+It is the responsibility of the author to incorporate the reviewers feedback and suggestions, and to address any possible issues in the design documentation.
 
-\subsection{Verification and Validation Plan Verification Plan}
+% \wss{Plans for design verification}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+% \wss{The review will include reviews by your classmates}
 
-\wss{The review will include reviews by your classmates}
+% \wss{Create a checklists?}
 
-\wss{Create a checklists?}
+\subsection{Verification and Validation Plan Verification Plan} \label{section4.4}
 
-\subsection{Implementation Verification Plan}
+The VnV plan will be continously updated throughout the project implementation phase.
+The VnV team will check whether the documented testing and verification process have been accomplished and the software functional and nonfunctional
+requirements have been fulfilled. The reviewers will provide their feedback through GitHub issues made by the author for the VnV plan review.
+It is the responsibility of the author to incorporate the reviewers feedback and suggestions, and to address any possible issues in the VnV documentation.
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
 
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+% \wss{The verification and validation plan is an artifact that should also be
+%   verified.  Techniques for this include review and mutation testing.}
 
-\subsection{Automated Testing and Verification Tools}
+% \wss{The review will include reviews by your classmates}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+% \wss{Create a checklists?}
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+% \subsection{Implementation Verification Plan} \label{section4.5}
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+% \wss{You should at least point to the tests listed in this document and the unit
+%   testing plan.}
 
-\subsection{Software Validation Plan}
+% \wss{In this section you would also give any details of any plans for static
+%   verification of the implementation.  Potential techniques include code
+%   walkthroughs, code inspection, static analyzers, etc.}
+\subsection{Implementation Verification Plan} \label{section4.5}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+In this section, we outline the plan for verifying the implementation of our software system.
+The verification process will ensure that the software meets the specified requirements and functions as intended.
 
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
+\subsubsection{Dynamic Testing}
+We will conduct a series of dynamic tests which include unit testing and integration testing. Due to the time constraints of the project, system testing and acceptance testing will not be conducted.
+The unit testing plan is detailed in Section \ref{section6} of the Test Plan document, where each module of the software will be tested individually to ensure correct behavior.
+Integration testing will ensure that multiple modules are well integrated and can communicate and operate together correctly.
 
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
+\subsubsection{Static Verification}
+In addition to dynamic testing, we will employ various static verification techniques to examine the source code. These techniques include:
 
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
+\begin{itemize}
+  \item \textbf{Code Walkthroughs:} The development team will conduct regular code walkthroughs, where the source code is reviewed to identify potential issues and ensure adherence to coding standards.
 
-\wss{This section might reference back to the SRS verification section.}
+  \item \textbf{Code Inspections:} Formal code inspections will be carried out to systematically examine the code for defects, compliance with design and coding guidelines, and other quality attributes.
 
-\section{System Test Description}
-	
+  \item \textbf{Static Analyzers:} We will use static analysis tools such as ESLint to automatically analyze the code for common programming errors, code smells, and to enforce coding standards.
+
+\end{itemize}
+
+These static verification techniques will complement our dynamic testing efforts and help ensure the reliability and quality of the software implementation.
+
+\subsection{Automated Testing and Verification Tools} \label{section4.6}
+
+The project will be maintained using CI/CD pipeline implemented using Docker and GitHub actions. GitHub Actions offers flexibility and customization when building CI/CD pipelines which is
+cruical for our project as it have many overlapping components. The SRS document contains an introduction to the different components of the project \cite{BrainInsightSRS2024}. GitHub actions can
+run tests by comparing expected outcomes with current outcomes from the software and directly build and deploy the software after each successful update. The individual tests will be written in Pytest library.
+\subsection{Software Validation Plan} \label{section4.7}
+
+Software Validation Plan is out of scope for BrainInsight3D due to the time constraints and limited resources of the project.
+
+\section{System Test Description} \label{section5}
+
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+This sections presents the planned tests for the functional requirements for BrainInsight3D stated in SRS Document
+\cite{BrainInsightSRS2024} in Section 5.1. There are six functional requirements for BrainInsight3D,
+R1 is related to input, R2 to R4 are related to image processing and visualization, and R5 and R6 are
+related to segmentation. Section \ref{section5.1} presents the tests for input verification, section \ref{section5.2} presents
+the tests for image processing and visualization, and section \ref{section5.3} presents the tests for image segmentation.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+% \wss{Subsets of the tests may be in related, so this section is divided into
+%   different areas.  If there are no identifiable subsets for the tests, this
+%   level of document structure can be removed.}
 
-\subsubsection{Area of Testing1}
+% \wss{Include a blurb here to explain why the subsections below
+%   cover the requirements.  References to the SRS would be good here.}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+\subsubsection{Input Testing} \label{section5.1}
+
+% \wss{It would be nice to have a blurb here to explain why the subsections below
+%   cover the requirements.  References to the SRS would be good here.  If a section
+%   covers tests for input constraints, you should reference the data constraints
+%   table in the SRS.}
+
+The purpose of the tests in this section is to ensure the input scan is non-corrupt and in
+the correct format in order to be viable to be used in the subsequent processing steps.
+
+\paragraph{Input Scan Testing}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+  \item{test-input-scan-format}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+        Control: Automatic
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+        Initial State: System waiting to receive input scan
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+        Input: Input Scan in NIfTI format
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+        Output: A message signaling that the scan was read successfully or a detailed error message
+        with the complete error log.
 
-How test will be performed: 
+        Test Case Derivation: This test is conducted when the user uploads a new scan into the software application.
+        The test ensures that the scan is in the correct format and non-corrupt before passing it to the preprocessing and
+        visualization steps.
+
+        How test will be performed: The input scan will be read by a library function, the function will return an output
+        based on whether the scan was read successfully or not. The return message will then guide the system to print the success message
+        or the failure message with the detailed error log.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Preprocessing and Visualization} \label{section5.2}
+
+\begin{enumerate}
+
+  \item{test-image-processing-slices-2d}
+
+        Control: Automatic
+
+        Initial State: Input Scan have been uploaded successfully in the supported format.
+
+        Input: Input Scans with different orientations, noise levels, and contrast levels.
+
+        Output: Processed scan slices with adjusted contrast and brightness levels, reduced noise, and the skull and neck
+        details removed from the scan leaving only the brain area visible (region of interest).
+
+        Test Case Derivation: This test validates a crucial step in the visualization pipeline, the image preprocessing step.
+        Failure of this test will lead to failure of both the visualization and segmentation steps. The test validates that the
+        input scan has successfully passed through all the preprocessing steps before the scan is visualized in 2D or 3D space, or passed to the
+        segmentation model.
+
+        How test will be performed: The input scan will be processed by the preprocessing function performing
+        multiple operations as image registeration and smoothing to obtain the final result for visualization.
+        If the function fails at any of the preprocessing steps, an error message will be printed highlighting
+        the part where the error occurred along with the error log available from that processing step.
+
+  \item{test-image-visualization-volume-3d}
+
+        Control: Automatic
+
+        Initial State: Input scans have successfully passed through the preprocessing pipeline.
+
+        Input: Preprocessed input scans.
+
+        Output: Reconstructed 3D volume of the input scan 2D slices.
+
+        Test Case Derivation: This test validates that the 3D volume has been successfully reconstructed from the 2D slices
+        for visualization in the web interface.
+
+        How test will be performed: The preprocessed input scans will be used as input to the 3D reconstruction function that
+        will return the 3D volume if the reconstruction was successful, otherwise it will return an error log explaining where exactly
+        in the reconstruction step did the error occur.
+
+
+\end{enumerate}
+\subsubsection{Area of Testing3} \label{section5.3}
+
+\begin{enumerate}
+
+  \item{test-image-segmentation-model-load}
+
+        Control: Automatic
+
+        Initial State: System waiting for segmentation model to load
+
+        Input: Segmentation Model file
+
+        Output: A message signaling if the segmentation model has been loaded successfully or an error
+        message with the exact error log explaining where and why the error occurred.
+
+        Test Case Derivation: This test ensures that the segmentation model is successfully loaded
+        and ready to receive input slices to perform the segmentation process.
+
+        How test will be performed: The model file will be uploaded in .h5 format which will be read by
+        the machine learning library(PyTorch) and return a message indicating the success or failure of loading the model file.
+
+  \item{test-image-segmentation-mask-result}
+
+        Control: Automatic
+
+        Initial State: Segmentation model ready to receive input slice.
+
+        Input: Processed slice image.
+
+        Output: Mask image with the segmented brain areas.
+
+        Test Case Derivation: This test case tests the performance of the segmentation model when
+        receiving a preprocessed brain image slice for segmentation of the functional brain areas.
+        The model should output a gray mask image with the segmented brain areas.
+
+        How test will be performed: the user will upload the brain scans which will be read and processed then
+        passed automatically by an automated script to the segmentation model. If the test is successful, the output
+        of the test will be merged with the brain slice original image and visualized in the user interface.
+
+\end{enumerate}
 
 ...
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy}
+This sections presents the planned tests for the functional requirements for BrainInsight3D stated in SRS Document
+\cite{BrainInsightSRS2024} in Section 5.2.
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+% \wss{The nonfunctional requirements for accuracy will likely just reference the
+%   appropriate functional tests from above.  The test cases should mention
+%   reporting the relative error for these tests.  Not all projects will
+%   necessarily have nonfunctional requirements related to accuracy}
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
+% \wss{Tests related to usability could include conducting a usability test and
+%   survey.  The survey will be in the Appendix.}
 
-\subsubsection{Area of Testing1}
-		
+% \wss{Static tests, review, inspections, and walkthroughs, will not follow the
+%   format for the tests given below.}
+
+\subsubsection{Accuracy Testing}
+
 \paragraph{Title for Test}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+  \item{test-id1\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+        Type: Functional, Dynamic, Manual, Static etc.
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+        Initial State:
+
+        Input/Condition:
+
+        Output/Result:
+
+        How test will be performed:
+
+  \item{test-id2\\}
+
+        Type: Functional, Dynamic, Manual, Static etc.
+
+        Initial State:
+
+        Input:
+
+        Output:
+
+        How test will be performed:
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability Testing}
+\item{test-id2\\}
+
+Type: Functional, Dynamic, Manual, Static etc.
+
+Initial State:
+
+Input:
+
+Output:
+
+How test will be performed:
+
+\end{enumerate}
+
+\subsubsection{Maintability Testing}
+\subsubsection{Portability Testing}
 
 ...
 
@@ -315,21 +486,21 @@ How test will be performed:
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
 
-\section{Unit Test Description}
+\section{Unit Test Description} \label{section6}
 
 \wss{This section should not be filled in until after the MIS (detailed design
   document) has been completed.}
 
 \wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
+  philosophy for test case selection.}
 
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
+\wss{To save space and time, it may be an option to provide less detail in this section.
+  For the unit tests you can potentially layout your testing strategy here.  That is, you
+  can explain how tests will be selected for each module.  For instance, your test building
+  approach could be test cases for each access program, including one test for normal behaviour
+  and as many tests as needed for edge cases.  Rather than create the details of the input
+  and output here, you could point to the unit testing code.  For this to work, you code
+  needs to be well-documented, with meaningful names for all of the tests.}
 
 \subsection{Unit Testing Scope}
 
@@ -354,38 +525,38 @@ needs to be well-documented, with meaningful names for all of the tests.}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+  \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+        Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+          be automatic}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+        Initial State:
 
-How test will be performed: 
-					
-\item{test-id2\\}
+        Input:
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+        Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+        Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+        How test will be performed:
 
-\item{...\\}
-    
+  \item{test-id2\\}
+
+        Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+          be automatic}
+
+        Initial State:
+
+        Input:
+
+        Output: \wss{The expected result for the given inputs}
+
+        Test Case Derivation: \wss{Justify the expected value given in the Output field}
+
+        How test will be performed:
+
+  \item{...\\}
+
 \end{enumerate}
 
 \subsubsection{Module 2}
@@ -402,33 +573,33 @@ How test will be performed:
   mentioned functional tests.}
 
 \subsubsection{Module ?}
-		
+
 \begin{enumerate}
 
-\item{test-id1\\}
+  \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+        Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+          be automatic}
 
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+        Initial State:
+
+        Input/Condition:
+
+        Output/Result:
+
+        How test will be performed:
+
+  \item{test-id2\\}
+
+        Type: Functional, Dynamic, Manual, Static etc.
+
+        Initial State:
+
+        Input:
+
+        Output:
+
+        How test will be performed:
 
 \end{enumerate}
 
@@ -439,10 +610,10 @@ How test will be performed:
 \subsection{Traceability Between Test Cases and Modules}
 
 \wss{Provide evidence that all of the modules have been considered.}
-				
+
 \bibliographystyle{plainnat}
 
-\bibliography{../../refs/References}
+\bibliography{../../refs/ReferencesVnV}
 
 \newpage
 
@@ -475,14 +646,14 @@ graduate attribute of Lifelong Learning.  Please answer the following questions:
 
 \begin{enumerate}
   \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete the verification and validation of your project?
-  Examples of possible knowledge and skills include dynamic testing knowledge,
-  static testing knowledge, specific tool usage etc.  You should look to
-  identify at least one item for each team member.
+        successfully complete the verification and validation of your project?
+        Examples of possible knowledge and skills include dynamic testing knowledge,
+        static testing knowledge, specific tool usage etc.  You should look to
+        identify at least one item for each team member.
   \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+        question, what are at least two approaches to acquiring the knowledge or
+        mastering the skill?  Of the identified approaches, which will each team
+        member pursue, and why did they make this choice?
 \end{enumerate}
 
 \end{document}
