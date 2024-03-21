@@ -38,9 +38,10 @@ urlcolor=cyan          % color of external links
 
 \begin{document}
 
-\title{Module Interface Specification for \progname{}}
+\title{Module Interface Specification for BrainInsight3D: 3D fMRI
+  Visualization \& Segmentation}
 
-\author{\authname}
+\author{Nada Elmasry}
 
 \date{\today}
 
@@ -51,20 +52,19 @@ urlcolor=cyan          % color of external links
 \section{Revision History}
 
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
-\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
-\midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
-\bottomrule
+  \toprule {\bf Date} & {\bf Version} & {\bf Notes} \\
+  \midrule
+  Date 1              & 1.0           & Notes       \\
+  Date 2              & 1.1           & Notes       \\
+  \bottomrule
 \end{tabularx}
 
 ~\newpage
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
+See SRS Documentation at \url{https://github.com/NadaElmasry/3D-Image-Reconstruction-Segmentation/blob/main/docs/SRS/SRS.pdf}
 
-\wss{Also add any additional symbols, abbreviations or acronyms}
 
 \newpage
 
@@ -76,40 +76,39 @@ See SRS Documentation at \wss{give url}
 
 \section{Introduction}
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+The following document details the Module Interface Specifications for BrainInsight3D: 3D fMRI
+Visualization \& Segmentation.
+
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/NadaElmasry/3D-Image-Reconstruction-Segmentation}.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
 \cite{GhezziEtAl2003}.  The mathematical notation comes from Chapter 3 of
 \citet{HoffmanAndStrooper1995}.  For instance, the symbol := is used for a
 multiple assignment statement and conditional rules follow the form $(c_1
-\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
+  \Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
 
-The following table summarizes the primitive data types used by \progname. 
+The following table summarizes the primitive data types used by \progname.
 
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
-\noindent 
-\begin{tabular}{l l p{7.5cm}} 
-\toprule 
-\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
-\midrule
-character & char & a single symbol or digit\\
-integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
-natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
-real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-\bottomrule
-\end{tabular} 
+  \renewcommand{\arraystretch}{1.2}
+  \noindent
+  \begin{tabular}{l l p{7.5cm}}
+    \toprule
+    \textbf{Data Type} & \textbf{Notation} & \textbf{Description}                                             \\
+    \midrule
+    character          & char              & a single symbol or digit                                         \\
+    integer            & $\mathbb{Z}$      & a number without a fractional component in (-$\infty$, $\infty$) \\
+    natural number     & $\mathbb{N}$      & a number without a fractional component in [1, $\infty$)         \\
+    real               & $\mathbb{R}$      & any number in (-$\infty$, $\infty$)                              \\
+    \bottomrule
+  \end{tabular}
 \end{center}
 
 \noindent
@@ -125,49 +124,472 @@ described by giving their type signature followed by their specification.
 The following table is taken directly from the Module Guide document for this project.
 
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+    \toprule
+    \textbf{Level 1}                                      & \textbf{Level 2}                         \\
+    \midrule
 
-{Hardware-Hiding} & ~ \\
-\midrule
+    {Hardware-Hiding Module}                              & ~                                        \\
+    \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
-\midrule
+    \multirow{7}{0.3\textwidth}{Behaviour-Hiding Module}  & Input Format Module                      \\
+                                                          & Input Verification Module                \\
+                                                          & Data Preprocessing Module                \\
+                                                          & 2D Slice Module                          \\
+                                                          & 3D Volume Module                         \\
+                                                          & Segmentation Module                      \\
+                                                          & User Interface Module                    \\
+                                                          & Main Program Module                      \\
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
-\bottomrule
+    \midrule
 
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
+    \multirow{3}{0.3\textwidth}{Software Decision Module} & 2D Data Visualization Module             \\
+                                                          & 3D Data Visualization Module             \\
+                                                          & User Interface Rendering Module          \\
+                                                          & Segmentation Algorithm Processing Module \\
+                                                          & Optimization Module                      \\
+    \bottomrule
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
 \end{table}
 
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
+\section{MIS of Input Format Module} \label{IF}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+InputFormat
 
 \subsection{Uses}
+None
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item read\_scan
+        \begin{itemize}
+          \item \textbf{Input:} NIfTI file containing scan meta-data and scan of dimensions $ 1 \times 3 \times 3 \times 3$ containg the input scan voxel values at
+                each timepoint.
+          \item \textbf{Output:} scan meta-data in a tuple format and scan voxel values in NumPy ndarray of dimensions $ 1 \times 3 \times 3 \times 3$.
+          \item \textbf{Exception:} "InvalidFormatError" if the input file is not in NIfTI format. "FileNotFoundError" if the input file cannot be found in file path.
+                "CorruptFileError" if the input scan is corrupted.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+CurrentScanData: Carries the input scan-metadata and matrix with voxel values.
+
+\subsubsection{Environment Variables}
+None
+
+\subsubsection{Assumptions}
+None
+\subsubsection{Access Routine Semantics}
+
+\noindent read\_scan(scan\_file):
+\begin{itemize}
+  \item transition: accepts NIfTI files as input and changes the state variable
+        CurrentScanData to the most recent successfully read NIfTI scan file.
+  \item output: scan meta-data (tuple), scan voxel values (NumPy ndarray of dimensions $1x3x3x3$)
+  \item exception: "InvalidFormatError" if the input file is not in NIfTI format. "FileNotFoundError" if the input file cannot be found in file path.
+        "CorruptFileError" if the input scan is corrupted.
+\end{itemize}
+
+
+
+\subsubsection{Local Functions}
+
+None
+
+\newpage
+
+\section{MIS of Input Verification Module} \label{IV}
+
+
+\subsection{Module}
+
+Input Verification
+
+\subsection{Uses}
+ImageFormatModule
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item validate\_scan
+        \begin{itemize}
+          \item \textbf{Input:} scan meta-data in a tuple format and scan voxel values in NumPy ndarray of dimensions $ 1 \times 3 \times 3 \times 3$.
+          \item \textbf{Output:} None.
+          \item \textbf{Exception:} "MissingMetaDataError" if metadata is missing attributes required by the software
+                for correct rendering. "MismatchedDimensionsError" if scan dimensions are not as expected by the software application.
+                "InvalidDataRange" if input scan data isn't in the normal fMRI scan ranges or if all values is zero.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+Scan data has successfully passed the checks in ImageFormatModule.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent validate\_scan(meta\_data, scan\_array):
+\begin{itemize}
+  \item transition: -
+  \item output: None.
+  \item exception: "MissingMetaDataError" if metadata is missing attributes required by the software
+        for correct rendering. "MismatchedDimensionsError" if scan dimensions are not as expected by the software application.
+        "InvalidDataRange" if input scan data isn't in the normal fMRI scan ranges or if all values is zero.
+
+\end{itemize}
+
+
+
+\subsubsection{Local Functions}
+
+None.
+
+\newpage
+
+\section{MIS of Data Preprocessing Module} \label{DP}
+
+
+\subsection{Module}
+
+DataProc
+
+\subsection{Uses}
+None
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+None
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item align\_scan
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan data aligned.
+          \item \textbf{Exception:} "ImageAlignmentError" if there is an error that causes the
+                alignment algorithm to fail.
+        \end{itemize}
+  \item normalize\_scan
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan voxel data normalized with zero mean and unit standard deviation.
+          \item \textbf{Exception:} "ImageNormalizationError" if there is an error that causes the
+                normalization algorithm to fail.
+        \end{itemize}
+  \item remove\_noise
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan voxel data with reduced noise.
+          \item \textbf{Exception:} "ImageNoiseRemovalError" if there is an error that causes the
+                noise removal algorithm to fail.
+        \end{itemize}
+  \item register\_scan
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of registered scan voxel data.
+          \item \textbf{Exception:} "ImageRegistrationError" if there is an error that causes the
+                registration algorithm to fail.
+        \end{itemize}
+  \item enhance\_contrast
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan voxel data with enhanced contrast.
+          \item \textbf{Exception:} "ImageContrastEnhancementError" if there is an error that causes the
+                contrast enhancement algorithm to fail.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+\begin{itemize}
+  \item isAligned: boolean to indicate whether the scan has passed
+        through the image alignment step of the preproceesing pipeline.
+  \item isRegistered: boolean to indicate whether the scan has passed
+        through the image registeration step of the preproceesing pipeline.
+  \item isNormalized: boolean to indicate whether the scan has passed
+        through the image normalization step of the preproceesing pipeline.
+  \item isDenoised: boolean to indicate whether the scan has passed
+        through the image denoising step of the preproceesing pipeline.
+  \item isContrastEnhanced: boolean to indicate whether the scan has passed
+        through the contrast enhancement step of the preproceesing pipeline.
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+Scan data has successfully passed the tests in the InputVerificationModule.
+\subsubsection{Access Routine Semantics}
+
+\noindent align\_scan(scan\_array):
+\begin{itemize}
+  \item transition: performs image alignment process on all slices of
+        the input scan volumes and sets the isAligned state variable to true
+        if the function terminates successfully.
+  \item output: NumPy ndarray of scan data aligned.
+  \item exception: "ImageAlignmentError" if there is an error that causes the
+        alignment algorithm to fail.
+\end{itemize}
+\noindent register\_scan(scan\_array):
+\begin{itemize}
+  \item transition: performs image registration process on all slices of
+        the input scan volumes and sets the isRegistered state variable to true
+        if the function terminates successfully.
+  \item output: NumPy ndarray of registered scan data.
+  \item exception: "ImageRegistrationError" if there is an error that causes the
+        registration algorithm to fail.
+\end{itemize}
+\noindent normalized\_scan(scan\_array):
+\begin{itemize}
+  \item transition: performs image normalization process on all slices of
+        the input scan volumes and sets the isNormalized state variable to true
+        if the function terminates successfully.
+  \item output: NumPy ndarray of normalized scan data.
+  \item exception: "ImageNormalizationError" if there is an error that causes the
+        normalization algorithm to fail.
+\end{itemize}
+\noindent remove\_noise(scan\_array):
+\begin{itemize}
+  \item transition: performs noise removal process on all slices of
+        the input scan volumes and sets the isDenoised state variable to true
+        if the function terminates successfully.
+  \item output:NumPy ndarray of scan voxel data with reduced noise.
+  \item exception: "ImageNoiseRemovalError" if there is an error that causes the
+        noise removal algorithm to fail.
+\end{itemize}
+\noindent enhance\_contrast(scan\_array):
+\begin{itemize}
+  \item transition: performs contrast enhancement process on all slices of
+        the input scan volumes and sets the isContrastEnhanced state variable to true
+        if the function terminates successfully.
+  \item output: NumPy ndarray of scan data with enhanced contrast.
+  \item exception: "ImageContrastEnhancementError" if there is an error that causes the
+        contrast enhancement algorithm to fail.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\newpage
+
+
+\section{MIS of 2D Slice Module} \label{2DS}
+
+
+\subsection{Module}
+
+2DSlicer
+\subsection{Uses}
+DataPreprocessingModule
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item get\_slice\_data
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of slice data where each slice is a two-dimensional NumPy ndarray.
+          \item \textbf{Exception:} "SlicingError" if the slicing algorithm cannot perform slicing properly due
+                to input incorrect dimensions or an error or condition causes the slicing algorithm to terminate without completing the slicing process.
+        \end{itemize}
+
+\end{enumerate}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+
+\subsubsection{Assumptions}
+
+Input scan is preprocessed and is in correct format.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent get\_slice\_data(scan\_array):
+\begin{itemize}
+  \item transition: -
+  \item output: NumPy ndarray of slice data where each slice is a two-dimensional NumPy ndarray.
+  \item exception: "SlicingError" if the slicing algorithm cannot perform slicing properly due
+        to input incorrect dimensions or an error or condition causes the slicing algorithm to terminate without completing the slicing process.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+None.
+
+\newpage
+\section{MIS of 3D Volume Module} \label{3DV}
+
+
+\subsection{Module}
+
+3DVolumeReconstruct
+
+\subsection{Uses}
+Data Preprocessing Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item get\_volume\_data
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan voxel data after compression and mapping.
+          \item \textbf{Exception:} "MappingError" if the voxel mapping algorithm fails due to scan properties.
+                "CompressionError" if the input scan cannot be compressed to the desired size without significant loss of data.
+                "ReconstructionError" if the 3D volume reconstruction fails to terminate successfully and return non-corrupt volume data.
+        \end{itemize}
+\end{enumerate}
+
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+None
+
+\subsubsection{Environment Variables}
+
+None
+\subsubsection{Assumptions}
+
+Input scan is preprocessed and is in correct format.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent get\_volume\_data(scan\_array):
+\begin{itemize}
+  \item transition: -
+  \item output: NumPy ndarray of scan voxel data after compression and mapping.
+  \item exception: "MappingError" if the voxel mapping algorithm fails due to scan properties.
+        "CompressionError" if the input scan cannot be compressed to the desired size without significant loss of data.
+        "ReconstructionError" if the 3D volume reconstruction fails to terminate successfully and return non-corrupt volume data.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+None.
+
+
+\newpage
+\section{MIS of Segmentation Module} \label{Seg}
+
+\subsection{Module}
+
+Seg
+
+\subsection{Uses}
+Data Preprocessing Module
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\subsubsection{Exported Access Programs}
+
+\begin{enumerate}
+  \item segment\_volume
+        \begin{itemize}
+          \item \textbf{Input:} NumPy ndarray of scan voxel data.
+          \item \textbf{Output:} NumPy ndarray of scan voxel data and the associated segmentation mask value for each voxel.
+          \item \textbf{Exception:} "SegmentationError" if model fails to produce segmentation mask from input scan due to
+                model internal error or network connectivity error if the connection with the web application has been reset.
+        \end{itemize}
+\end{enumerate}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item InputScan:
+  \item SegmentationMask:
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+None.
+
+\subsubsection{Assumptions}
+
+Input data has passed through the data preprocessing pipeline.
+\subsubsection{Access Routine Semantics}
+
+\noindent get\_volume\_data(scan\_array):
+\begin{itemize}
+  \item transition: -
+  \item output:  NumPy ndarray of scan voxel data and the associated segmentation mask value for each voxel.
+  \item exception: "SegmentationError" if model fails to produce segmentation mask from input scan due to
+        model internal error or network connectivity error if the connection with the web application has been reset.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+None.
+
+\newpage
+
+\section{MIS of User Interface Module} \label{UI} \wss{Use labels for
+  cross-referencing}
+
+
+\subsection{Module}
+
+UI
+
+\subsection{Uses}
+
+Main Program Module
 
 
 \subsection{Syntax}
@@ -176,81 +598,401 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{Exported Access Programs}
 
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
+
 
 \subsection{Semantics}
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+DisplayedTab: Indicates which tab (3D volume visualization, 2D slices visualization) is currently
+displayed.
+
+
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+None.
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+None.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
-\end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+None.
+
+
+\newpage
+% \section{MIS of Main Program Module} \label{MP}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+%   \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+%     \hline
+%     \textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+%     \hline
+%     \wss{accessProg} & -           & -            & -                   \\
+%     \hline
+%   \end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+%   \item transition: \wss{if appropriate}
+%   \item output: \wss{if appropriate}
+%   \item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
+
+% \newpage
+% \section{MIS of Data Visualization} \label{DV}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+%   \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+%     \hline
+%     \textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+%     \hline
+%     \wss{accessProg} & -           & -            & -                   \\
+%     \hline
+%   \end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+%   \item transition: \wss{if appropriate}
+%   \item output: \wss{if appropriate}
+%   \item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
+
+% \newpage
+% \section{MIS of User Interface Rendering Module} \label{UIR}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+%   \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+%     \hline
+%     \textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+%     \hline
+%     \wss{accessProg} & -           & -            & -                   \\
+%     \hline
+%   \end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+%   \item transition: \wss{if appropriate}
+%   \item output: \wss{if appropriate}
+%   \item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
+
+% \newpage
+% \section{MIS of Segmentation Algorithm Processing Module} \label{SegR}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+%   \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+%     \hline
+%     \textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+%     \hline
+%     \wss{accessProg} & -           & -            & -                   \\
+%     \hline
+%   \end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+%   \item transition: \wss{if appropriate}
+%   \item output: \wss{if appropriate}
+%   \item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
+
+
+
+
+% \newpage
+% \section{MIS of Optimization Module} \label{Op}
+
+% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+
+% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+
+% \subsection{Module}
+
+% \wss{Short name for the module}
+
+% \subsection{Uses}
+
+
+% \subsection{Syntax}
+
+% \subsubsection{Exported Constants}
+
+% \subsubsection{Exported Access Programs}
+
+% \begin{center}
+%   \begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+%     \hline
+%     \textbf{Name}    & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+%     \hline
+%     \wss{accessProg} & -           & -            & -                   \\
+%     \hline
+%   \end{tabular}
+% \end{center}
+
+% \subsection{Semantics}
+
+% \subsubsection{State Variables}
+
+% \wss{Not all modules will have state variables.  State variables give the module
+%   a memory.}
+
+% \subsubsection{Environment Variables}
+
+% \wss{This section is not necessary for all modules.  Its purpose is to capture
+%   when the module has external interaction with the environment, such as for a
+%   device driver, screen interface, keyboard, file, etc.}
+
+% \subsubsection{Assumptions}
+
+% \wss{Try to minimize assumptions and anticipate programmer errors via
+%   exceptions, but for practical purposes assumptions are sometimes appropriate.}
+
+% \subsubsection{Access Routine Semantics}
+
+% \noindent \wss{accessProg}():
+% \begin{itemize}
+%   \item transition: \wss{if appropriate}
+%   \item output: \wss{if appropriate}
+%   \item exception: \wss{if appropriate}
+% \end{itemize}
+
+% \wss{A module without environment variables or state variables is unlikely to
+%   have a state transition.  In this case a state transition can only occur if
+%   the module is changing the state of another module.}
+
+% \wss{Modules rarely have both a transition and an output.  In most cases you
+%   will have one or the other.}
+
+% \subsubsection{Local Functions}
+
+% \wss{As appropriate} \wss{These functions are for the purpose of specification.
+%   They are not necessarily something that is going to be implemented
+%   explicitly.  Even if they are implemented, they are not exported; they only
+%   have local scope.}
+
+
+
+
 
 \newpage
 
 \bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
-
-\newpage
-
-\section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
-
-\section{Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Problem Analysis and Design.  Please answer the following questions:
-
-\begin{enumerate}
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
-  \item Give a brief overview of other design solutions you considered.  What
-  are the benefits and tradeoffs of those other designs compared with the chosen
-  design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
-\end{enumerate}
+\bibliography {../../../refs/ReferencesMIS}
 
 
 \end{document}
